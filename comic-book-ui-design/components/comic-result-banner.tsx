@@ -13,7 +13,7 @@ interface ComicResultBannerProps {
   timeUntilNext?: string
 }
 
-export function ComicResultBanner({ type, movieTitle, guesses = [], gameStatus = "", dailyMovieTitle, timeUntilNext }: ComicResultBannerProps) {
+export function ComicResultBanner({ type, movieTitle, guesses = [] as string[], gameStatus = "", dailyMovieTitle, timeUntilNext }: ComicResultBannerProps) {
   const isSuccess = type === "success"
   const { toast } = useToast()
 
