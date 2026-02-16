@@ -185,10 +185,10 @@ export function ComicGamePanel() {
           {gameStatus !== "playing" ? (
             <ComicResultBanner
               type={gameStatus === "won" ? "success" : "failure"}
-              movieTitle={dailyMovie ? dailyMovie.title : ""}
+              movieTitle={dailyMovie ? (dailyMovie as { title: string }).title : ""}
               guesses={guesses}
               gameStatus={gameStatus}
-              dailyMovieTitle={dailyMovie ? dailyMovie.title : undefined}
+              dailyMovieTitle={dailyMovie ? (dailyMovie as { title: string }).title : undefined}
               timeUntilNext={timeUntilNext}
             />
           ) : (
