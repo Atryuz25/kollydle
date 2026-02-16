@@ -227,9 +227,9 @@ export function ComicGamePanel() {
                     className="absolute z-20 top-full mt-1 w-full border-[3px] border-foreground rounded-lg bg-card comic-shadow-sm overflow-hidden max-h-[200px] overflow-y-auto"
                   >
                     {titles
-                      .filter(t => t.toLowerCase().includes(guess.toLowerCase()))
+                      .filter((t: string) => t.toLowerCase().includes(guess.toLowerCase()))
                       .slice(0, 8)
-                      .map((movie) => (
+                      .map((movie: string) => (
                         <button
                           key={movie}
                           onClick={() => selectSuggestion(movie)}
