@@ -77,13 +77,26 @@ function getTodayISTString() {
 }
 
 function computeMovieIndex(startISO, moviesLength) {
+  if (moviesLength <= 0) return 0;
+
   const todayIST = getTodayISTString();
   const todayDate = new Date(todayIST + "T00:00:00Z");
   const start = new Date(startISO);
   const diffTime = todayDate - start;
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  if (moviesLength <= 0) return 0;
-  return ((diffDays % moviesLength) + moviesLength) % moviesLength;
+
+  // Seeded random number generator using the day number as seed
+  // This ensures everyone gets the same "random" movie on the same day
+  function seededRandom(seed) {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  // Use multiple iterations to get better randomness
+  let randomValue = seededRandom(diffDays + 12345);
+  randomValue = seededRandom(randomValue * 100000);
+
+  return Math.floor(randomValue * moviesLength);
 }
 
 export default function useKollywoodle() {
@@ -176,7 +189,7 @@ export default function useKollywoodle() {
 
     const newGuesses = [...guesses, rawGuess.trim()];
     setGuesses(newGuesses);
-    
+
     if (newGuesses.length >= MAX_GUESSES) {
       setGameStatus("lost");
       setRevealedClues(MAX_CLUES);
@@ -192,7 +205,7 @@ export default function useKollywoodle() {
     const init = { date: today, guesses: [], gameStatus: "playing", revealedClues: 1 };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(init));
-    } catch (e) {}
+    } catch (e) { }
     setGuesses([]);
     setGameStatus("playing");
     setRevealedClues(1);
