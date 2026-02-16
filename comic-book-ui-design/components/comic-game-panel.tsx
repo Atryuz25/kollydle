@@ -101,9 +101,9 @@ export function ComicGamePanel() {
   const attemptResults = useMemo(() => {
     if (!dailyMovie) return Array(MAX_ATTEMPTS).fill("unused") as ("correct" | "wrong" | "unused")[]
     const movie = dailyMovie as { title: string }
-    const res = guesses.map((g: string) => (g.trim().toLowerCase() === movie.title.toLowerCase() ? "correct" : "wrong"))
+    const res: ("correct" | "wrong" | "unused")[] = guesses.map((g: string) => (g.trim().toLowerCase() === movie.title.toLowerCase() ? "correct" : "wrong"))
     while (res.length < MAX_ATTEMPTS) res.push("unused")
-    return res as ("correct" | "wrong" | "unused")[]
+    return res
   }, [guesses, dailyMovie])
 
   return (
